@@ -1,5 +1,10 @@
 FROM php:7.2-cli
 
+ARG TZ=Europe/Moscow
+ARG APP_CODE_PATH_CONTAINER=/var/www/html
+
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
 RUN apt-get update && \
     apt-get install -y --force-yes --no-install-recommends \
         unzip \
@@ -90,9 +95,22 @@ RUN curl -s http://getcomposer.org/installer | php && \
 # Allow Composer to be run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+#####################################
+# VIM:
+#####################################
+RUN apt-get install -y --force-yes --no-install-recommends \
+    vim
+
 #
 #--------------------------------------------------------------------------
 # Final Touch
 #--------------------------------------------------------------------------
 #
 COPY ./conf/php.ini /usr/local/etc/php/php.ini
+
+#####################################
+#  Clean up APT:
+#####################################
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+WORKDIR ${APP_CODE_PATH_CONTAINER}
