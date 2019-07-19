@@ -95,8 +95,8 @@ RUN apt-get install -y \
     gnupg \
     gnupg2
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \
-    apt-get install nodejs npm -y
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
 
 #####################################
 # Composer:
