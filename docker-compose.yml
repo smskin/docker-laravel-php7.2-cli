@@ -4,8 +4,8 @@ services:
     build:
       context: .
       args:
-        - APP_CODE_PATH_CONTAINER
-        - TZ
+        - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
+        - TZ=${TZ}
     container_name: laravel-php7.2-cli
     stdin_open: true
     tty: true
